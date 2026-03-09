@@ -118,9 +118,8 @@ See Air Dashboard in action: **[Download Video Demo](demo.mp4)** -->
 
 ## 👥 Team Hi-Idea
 
-- Nitin Kumar  
-- Khusi Mishra  
-- Pratham Kumar Gupta  
+-Dhruv Raj Saini
+
 
 ---
 
