@@ -2,6 +2,39 @@
 
 A revolutionary platform that turns natural hand gestures into smart, expressive digital creations. Gesture-powered. AI-enhanced. Sign-language ready. Built for the future of learning, collaboration, and accessibility.
 
+## 🆕 Recent Updates (June 3, 2026)
+
+**All errors fixed and ready for local deployment!**
+
+✅ Fixed missing `string` module import  
+✅ Fixed missing `screen_shot` directory issue  
+✅ Fixed button coordinate scaling for proper gesture detection  
+✅ Improved text positioning and visibility  
+✅ Added automatic directory creation  
+
+See [FIXES_APPLIED.md](FIXES_APPLIED.md) for detailed information about all fixes.
+
+## 🚀 Quick Start
+
+### Windows (Easy Way)
+Double-click `start.bat` - it will check dependencies and launch the app!
+
+### Manual Start
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the application
+streamlit run app.py
+```
+
+The app will open at `http://localhost:8501`
+
+## 📚 Documentation
+
+- **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** - Complete deployment instructions
+- **[FIXES_APPLIED.md](FIXES_APPLIED.md)** - Details of all bug fixes applied
+
 ---
 
 ## 📚 Table of Contents
@@ -118,11 +151,10 @@ See Air Dashboard in action: **[Download Video Demo](demo.mp4)** -->
 
 ## 👥 Team Hi-Idea
 
--Dhruv Raj Saini
--Pratham
--Khushi
--Nitin
-
+- Dhruv Raj Saini
+- Nitin Kumar  
+- Khusi Mishra  
+- Pratham Kumar Gupta
 
 ---
 

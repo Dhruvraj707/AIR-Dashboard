@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 import importlib.util
 import sys
 import subprocess
+import string
 
 class VirtualPaintWebApp:
     def __init__(self):
@@ -42,6 +43,8 @@ class VirtualPaintWebApp:
         
         self.ai_ask_mode = False
         self.analysis_running = False
+        # Create screen_shot directory if it doesn't exist
+        os.makedirs("screen_shot", exist_ok=True)
         self.image_path = "screen_shot/Nitintemp.png"
 
     def setupCanvas(self):
@@ -139,7 +142,7 @@ class VirtualPaintWebApp:
 
     def process_frame(self, frame):
         frame = cv2.flip(frame, 1)
-        frame = cv2.resize(frame, (1200, 1200))  # Increased to 1200x1200
+        frame = cv2.resize(frame, (1200, 1200))  # Resize to 1200x1200
 
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         mask = cv2.inRange(hsv, self.lower_hsv, self.upper_hsv)
@@ -160,17 +163,17 @@ class VirtualPaintWebApp:
             else:
                 center = None
 
-            # Adjusted button detection for 1200x1200 (scaled from 600x600)
-            if center and center[1] <= 130:  # Scaled from 65 (65 * 2)
-                if 80 <= center[0] <= 280:    # CLEAR (40-140 * 2)
+            # Button detection for 1200x1200 canvas (scaled from 600x600 by factor of 2)
+            if center and center[1] <= 65:  # Button row height
+                if 40 <= center[0] <= 140:    # CLEAR button
                     self.clearCanvas()
-                elif 400 <= center[0] <= 700: # BLUE (200-350 * 2)
+                elif 200 <= center[0] <= 350: # BLUE button
                     self.colorIndex = 0
-                elif 800 <= center[0] <= 1100: # GREEN (400-550 * 2)
+                elif 400 <= center[0] <= 550: # GREEN button
                     self.colorIndex = 1
-                elif 1200 <= center[0] <= 1500: # RED (600-750 * 2)
+                elif 600 <= center[0] <= 750: # RED button
                     self.colorIndex = 2
-                elif 1600 <= center[0] <= 1900: # YELLOW (800-950 * 2)
+                elif 800 <= center[0] <= 950: # YELLOW button
                     self.colorIndex = 3
             else:
                 if not self.ai_ask_mode and center:
@@ -181,7 +184,7 @@ class VirtualPaintWebApp:
 
         self.drawPoints()
         cv2.putText(frame, f"Selected Color: {self.color_names[self.colorIndex]}", 
-                   (20, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 255), 2)  # Increased font size
+                   (20, 1150), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 0, 255), 3)  # Position at bottom
 
         return frame
 
@@ -309,7 +312,7 @@ def run_streamlit_app(return_callback=None):
                 if launched:
                     st.success("Advanced drawing application launched! Check your taskbar or system tray.")
     
-    # Custom CSS to ensure larger content fits
+    # Custom CSS to ensure larger content fits properly
     st.markdown("""
     <style>
     .main .block-container {
@@ -391,9 +394,9 @@ def run_streamlit_app(return_callback=None):
         st.header("AI Analysis Result")
         st.markdown(st.session_state.analysis_result)
     
-    placeholder_img = np.ones((1200, 1200, 3), dtype=np.uint8) * 200  # Increased to 1200x1200
-    cv2.putText(placeholder_img, "Click 'Start Webcam' to begin", (300, 600), 
-               cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 0), 2)  # Adjusted position and size
+    placeholder_img = np.ones((1200, 1200, 3), dtype=np.uint8) * 200  # Gray placeholder at 1200x1200
+    cv2.putText(placeholder_img, "Click 'Start Webcam' to begin", (250, 600), 
+               cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 0), 3)  # Centered text
     placeholder_img_rgb = cv2.cvtColor(placeholder_img, cv2.COLOR_BGR2RGB)
     
     paint_window_rgb = cv2.cvtColor(st.session_state.app.paintWindow, cv2.COLOR_BGR2RGB)
