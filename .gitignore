@@ -23,12 +23,13 @@ temp_canvas.png
 *.jpg
 *.jpeg
 
-# Environment variables
-.env
+# Environment variables (add secrets via Streamlit Cloud instead)
+# .env
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Streamlit
-.streamlit/
+# Streamlit (keep config, ignore cache)
+.streamlit/secrets.toml
+.streamlit/*_cache/

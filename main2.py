@@ -287,13 +287,20 @@ def run_streamlit_app(return_callback=None):
             st.session_state.app.lower_hsv = np.array([lower_h, lower_s, lower_v])
             st.session_state.app.upper_hsv = np.array([upper_h, upper_s, upper_v])
             st.header("AI Analysis")
-            load_dotenv()
+            # Load API key from Streamlit secrets or environment variable
             if 'GEMINI_API_KEY' not in st.session_state:
-                st.session_state.GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')   
+                # Try Streamlit secrets first (for cloud deployment)
+                try:
+                    st.session_state.GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
+                except:
+                    # Fall back to .env file (for local development)
+                    load_dotenv()
+                    st.session_state.GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', '')
+            
             show_api_key = st.checkbox("Configure API Key")
             if show_api_key:
                 api_key = st.text_input("Enter Gemini API Key", type="password", 
-                                       value=st.session_state.GEMINI_API_KEY)
+                                       value=st.session_state.GEMINI_API_KEY if st.session_state.GEMINI_API_KEY else "")
                 st.session_state.GEMINI_API_KEY = api_key
                 if st.button("Save API Key"):
                     st.success("API Key saved for this session")
