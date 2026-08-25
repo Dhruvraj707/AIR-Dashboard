@@ -147,9 +147,6 @@ Air Dashboard transforms natural gestures into digital visuals, enhanced in real
 
 - Dhruv Raj Saini
 - Nitin Kumar  
-- Khusi Mishra  
-- Pratham Kumar Gupta
-
 ---
 
 > Made with ❤️ for better, inclusive learning
